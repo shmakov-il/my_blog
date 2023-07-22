@@ -6,7 +6,7 @@ const app = express();
 dotenv.config();
 
 
-// Константы из .env
+// Constant
 const PORT = process.env.PORT;
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
