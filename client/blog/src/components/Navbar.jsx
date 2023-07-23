@@ -6,7 +6,7 @@ const Navbar = () => {
         color: 'white',
     };
 
-    const isAuth = true;
+    const isAuth = false;
 
     return (
         <div className='flex justify-between items-center py-6 text-white text-sm'>
@@ -29,9 +29,14 @@ const Navbar = () => {
                     </ul>
                 )
             }
-                <button className='flex justify-center items-center bg-gray-500 rounded-sm py-2 px-3 hover:bg-gray-400'>
-                    {isAuth ? 'Выход' : 'Вход'}
-                </button>
+            {
+                isAuth ? <button className='flex justify-center items-center bg-gray-500 rounded-sm py-2 px-3 hover:bg-gray-400'>
+                    Выйти
+                </button> : <Link to='/login'
+                                  className='hover:text-gray-400'>Войти</Link>
+
+            }
+
         </div>
     );
 };
