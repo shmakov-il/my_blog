@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../redux/features/auth/authSlice";
+import { toast } from 'react-toastify'
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -14,6 +15,12 @@ const RegisterPage = () => {
         setPassword('');
         setUsername('');
     }
+
+    useEffect(() => {
+        if (status) {
+            toast(status);
+        }
+    }, [status])
     return (
         <form className='mx-auto w-1/4 h-60 mt-40'
               onSubmit={e => e.preventDefault()}>

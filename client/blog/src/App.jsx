@@ -1,5 +1,8 @@
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+
 import RootLayout from "./layouts/RootLayout";
 import MainPage from "./pages/MainPage";
 import AddPostPage from "./pages/AddPostPage";
@@ -50,7 +53,11 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-      <RouterProvider router={router}/>
+      <>
+        <RouterProvider router={router}/>
+        <ToastContainer position='bottom-right'/>
+      </>
+
   );
 }
 
