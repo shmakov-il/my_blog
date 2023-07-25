@@ -1,26 +1,34 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {registerUser} from "../redux/features/auth/authSlice";
+import {clearStatusFull, isAuthCheck, registerUser} from "../redux/features/auth/authSlice";
 import { toast } from 'react-toastify'
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const {status} = useSelector(store => store.auth);
+    const navigate = useNavigate();
+    const {status} = useSelector(state => state.auth);
+    const isAuth = useSelector(isAuthCheck);
 
     const handleSubmit = () => {
         dispatch(registerUser({username, password}));
-        setPassword('');
-        setUsername('');
+    }
+
+    const clearStatus = () => {
+        dispatch(clearStatusFull());
     }
 
     useEffect(() => {
         if (status) {
             toast(status);
         }
-    }, [status])
+        if (isAuth) {
+            navigate('/');
+        }
+    }, [status, isAuth, navigate]);
+
     return (
         <form className='mx-auto w-1/4 h-60 mt-40'
               onSubmit={e => e.preventDefault()}>
@@ -46,6 +54,7 @@ const RegisterPage = () => {
                         onClick={handleSubmit}
                         className='text-xs text-white rounded-lg py-2 px-3 bg-gray-600 hover:bg-gray-500'>Подтвердить</button>
                 <Link to='/login'
+                      onClick={clearStatus}
                       className='text-xs text-white hover:text-gray-500'>
                     Уже есть аккаунт?
                 </Link>

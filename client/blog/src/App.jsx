@@ -11,6 +11,9 @@ import LoginPage from "./pages/LoginPage";
 import PostPage from "./pages/PostPage";
 import PostsPage from "./pages/PostsPage";
 import RegisterPage from "./pages/RegisterPage";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {getUser} from "./redux/features/auth/authSlice";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +55,12 @@ const router = createBrowserRouter([
 
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
       <>
         <RouterProvider router={router}/>

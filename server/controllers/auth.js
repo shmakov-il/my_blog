@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
     try {
         const {username, password} = req.body;
-        const isUser = await User.findOne({username});
+        const user = await User.findOne({username});
 
-        if (isUser) {
+        if (user) {
              return res.json({message: `Пользователь с именем ${username} занят.`});
         }
 
@@ -19,9 +19,16 @@ export const register = async (req, res) => {
             password: hash,
         });
 
+        const token = jwt.sign(
+            {id: newUser._id},
+            process.env.JWT_SECRET,
+            {expiresIn: "30d"}
+        );
+
         await newUser.save();
 
         res.json({
+            token,
             newUser,
             message: 'Регистрация прошла успешна.'
         });
@@ -85,3 +92,5 @@ export const getMe = async (req, res) => {
         res.json({message: "Нет доступа."})
     }
 }
+
+
